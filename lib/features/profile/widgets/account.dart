@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_task/features/profile/widgets/edit_name.dart';
 import 'package:test_task/share/image_picker.dart';
 
 class Account extends StatefulWidget {
@@ -9,6 +11,9 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  TextEditingController textControllerName = TextEditingController();
+  TextEditingController textControllerSurname = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -65,23 +70,55 @@ class _AccountState extends State<Account> {
                       ],
                     ),
                   ),
+                  const Text('apollon@gmail.com'),
                   const SizedBox(
                     height: 32,
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Имя',
-                      labelText: 'Ваше имя',
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => EditName(
+                            textController: textControllerName,
+                            title: 'Ваше имя',
+                          ),
+                        ),
+                      ).then((value) => setState(() {}));
+                    },
+                    leading: const Text('Имя'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        textControllerName.text != ''
+                            ? Text(textControllerName.text)
+                            : const Text('Настроить'),
+                        const Icon(Icons.arrow_forward_ios)
+                      ],
                     ),
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Профессия',
-                      labelText: 'Ваша профессия',
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => EditName(
+                            textController: textControllerSurname,
+                            title: 'Ваша фамилия',
+                          ),
+                        ),
+                      ).then((value) => setState(() {}));
+                    },
+                    leading: const Text('Фамилия'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        textControllerSurname.text != ''
+                            ? Text(textControllerSurname.text)
+                            : const Text('Настроить'),
+                        const Icon(Icons.arrow_forward_ios)
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 32,
                   ),
                 ],
               ),
